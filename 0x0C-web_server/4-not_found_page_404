@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-#configure a custom 404 page
-
+# Configure Nginx server to give error 404 page
 sudo apt-get update
 sudo apt-get -y install nginx
 ufw allow 'Nginx HTTP'
@@ -21,13 +20,14 @@ new_config=\
         location  /404.html {
             internal;
         }
-        
+
         if (\$request_filename ~ redirect_me){
-            rewrite ^ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;
+            rewrite ^ https://www.youtube.com/@tpauldike permanent;
         }
 }
 "
 echo "Ceci n'est pas une page" > /var/www/html/404.html
+
 echo "$new_config" > /etc/nginx/sites-available/default
 
 if [ "$(pgrep nginx)" -le 0 ];
